@@ -7,6 +7,6 @@ object payment {
   case class Payment(
       id: UserId,
       total: Money,
-      card: Card
+      card: checkout.Card
   )
 }

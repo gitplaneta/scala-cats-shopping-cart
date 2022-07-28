@@ -4,6 +4,7 @@ import squants.market.Money
 import io.estatico.newtype.macros.newtype
 import java.util.UUID
 import shop.domain.brand.Brand
+import shop.domain.category.{ Category, CategoryId }
 
 object item {
   @newtype case class ItemId(value: UUID)

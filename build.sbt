@@ -2,7 +2,7 @@ import Dependencies._
 
 inThisBuild(
   Seq(
-    scalaVersion := "2.13.8",
+    scalaVersion := "2.13.6",
     version := "0.1.0",
     organization := "eu.busz",
     organizationName := "radzina",
