@@ -3,6 +3,7 @@ package shop.services
 import shop.http.auth.users.UserName
 import shop.domain.auth._
 import shop.http.auth.users.Password
+import dev.profunktor.auth.jwt.JwtToken
 
 trait Auth[F[_]] {
   def findUser(token: JwtToken): F[Option[User]]

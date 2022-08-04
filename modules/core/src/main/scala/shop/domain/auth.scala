@@ -1,11 +1,60 @@
 package shop.domain
 
+import derevo.cats.{eqv, show}
+import derevo.circe.magnolia.{decoder, encoder}
+import derevo.derive
+import eu.timepit.refined.auto.autoUnwrap
+import eu.timepit.refined.types.string.NonEmptyString
 import io.estatico.newtype.macros.newtype
+
 import java.util.UUID
 import shop.http.auth.users
+import shop.http.auth.users.{Password, UserName}
+import shop.optics.uuid
+import io.circe._
+import io.circe.refined._
+
+import scala.util.control.NoStackTrace
 
 object auth {
-  @newtype case class UserId(value: UUID)
+  @derive(decoder, encoder, eqv, show, uuid)
+  @newtype
+  case class UserId(value: UUID)
+  @derive(decoder, encoder)
   @newtype case class JwtToken(value: String)
+  @derive(decoder, encoder)
   case class User(id: UserId, name: users.UserName)
+
+  @derive(decoder, encoder)
+  @newtype
+  case class UserNameParam(value: NonEmptyString) {
+    def toDomain: UserName = UserName(value.toLowerCase)
+  }
+
+  @derive(decoder, encoder)
+  @newtype
+  case class PasswordParam(value: NonEmptyString) {
+    def toDomain: Password = Password(value)
+  }
+
+  @derive(decoder, encoder)
+  case class CreateUser(
+                         username: UserNameParam,
+                         password: PasswordParam
+                       )
+
+  case class UserNotFound(username: UserName) extends NoStackTrace
+
+  case class UserNameInUse(username: UserName) extends NoStackTrace
+
+  case class InvalidPassword(username: UserName) extends NoStackTrace
+
+  case object UnsupportedOperation extends NoStackTrace
+
+  case object TokenNotFound extends NoStackTrace
+  @derive(decoder, encoder)
+  case class LoginUser(
+                        username: UserNameParam,
+                        password: PasswordParam
+                      )
 }
