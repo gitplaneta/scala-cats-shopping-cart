@@ -12,8 +12,6 @@ import io.circe.{ Decoder, Encoder }
 import io.estatico.newtype.macros.newtype
 import squants.market.{ Money, USD }
 
-import scala.util.control.NoStackTrace
-
 object cart {
   @derive(decoder, encoder, eqv, show)
   @newtype
@@ -22,7 +20,6 @@ object cart {
   @derive(eqv, show)
   @newtype
   case class Cart(items: Map[ItemId, Quantity])
-
   object Cart {
     implicit val jsonEncoder: Encoder[Cart] =
       Encoder.forProduct1("items")(_.items)

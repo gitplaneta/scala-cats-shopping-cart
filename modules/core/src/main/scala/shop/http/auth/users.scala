@@ -3,10 +3,15 @@ package shop.http.auth
 import derevo.cats.{eqv, show}
 import derevo.circe.magnolia.{decoder, encoder}
 import derevo.derive
+import dev.profunktor.auth.jwt.JwtSymmetricAuth
 import io.estatico.newtype.macros.newtype
 import shop.domain.auth.UserId
 
 object users {
+
+  @newtype case class AdminJwtAuth(value: JwtSymmetricAuth)
+  @newtype case class UserJwtAuth(value: JwtSymmetricAuth)
+
   @derive(decoder, encoder, eqv, show)
   @newtype case class UserName(value: String)
   @derive(decoder, encoder)

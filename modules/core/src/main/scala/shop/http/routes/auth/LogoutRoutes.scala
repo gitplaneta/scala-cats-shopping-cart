@@ -1,14 +1,13 @@
-package shop.http.routes
+package shop.http.routes.auth
 
 import cats.Monad
 import dev.profunktor.auth.AuthHeaders
-import org.http4s.{ AuthedRoutes, HttpRoutes }
 import org.http4s.dsl.Http4sDsl
+import org.http4s.server.{ AuthMiddleware, Router }
+import org.http4s.{ AuthedRoutes, HttpRoutes }
 import shop.http.auth.users.CommonUser
 import shop.services.Auth
 import cats.syntax.all._
-import shop.http.auth.users._
-import org.http4s.server.{ AuthMiddleware, Router }
 
 final case class LogoutRoutes[F[_]: Monad](
     auth: Auth[F]
