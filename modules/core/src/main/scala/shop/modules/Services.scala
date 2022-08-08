@@ -1,8 +1,7 @@
 package shop.modules
 
-import shop.domain.brand.Brands
 import shop.effects.GenUUID
-import shop.services.{Categories, HealthCheck, Items, Orders, ShoppingCart}
+import shop.services.{Brands, Categories, HealthCheck, Items, Orders, ShoppingCart}
 
 sealed abstract class Services[F[_]] private(val cart: ShoppingCart[F],
                                              val brands: Brands[F],

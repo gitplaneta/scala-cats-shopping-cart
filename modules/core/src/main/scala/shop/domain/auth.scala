@@ -8,7 +8,6 @@ import eu.timepit.refined.types.string.NonEmptyString
 import io.estatico.newtype.macros.newtype
 
 import java.util.UUID
-import shop.http.auth.users
 import shop.http.auth.users.{Password, UserName}
 import shop.optics.uuid
 import io.circe._
@@ -20,10 +19,6 @@ object auth {
   @derive(decoder, encoder, eqv, show, uuid)
   @newtype
   case class UserId(value: UUID)
-  @derive(decoder, encoder)
-  @newtype case class JwtToken(value: String)
-  @derive(decoder, encoder)
-  case class User(id: UserId, name: users.UserName)
 
   @derive(decoder, encoder)
   @newtype

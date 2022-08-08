@@ -19,12 +19,6 @@ import io.circe.{ Decoder, Encoder }
 import io.estatico.newtype.macros.newtype
 
 object brand {
-  trait Brands[F[_]] {
-    def findAll: F[List[Brand]]
-    def create(name: BrandName): F[Brand]
-
-  }
-
   @derive(queryParam, show)
   @newtype
   case class BrandParam(value: NonEmptyString) {
