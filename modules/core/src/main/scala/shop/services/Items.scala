@@ -5,7 +5,7 @@ import shop.domain.ID
 import shop.domain.brand.BrandName
 import shop.domain.item.{ CreateItem, Item, ItemId, UpdateItem }
 import shop.effects.GenUUID
-import shop.services.ItemsSql._
+import shop.services.ItemsSQL._
 import shop.sql.codecs._
 import skunk._
 import skunk.implicits._
@@ -61,7 +61,7 @@ object Items {
   }
 }
 
-object ItemsSql {
+object ItemsSQL {
   val selectAll: Query[Void, Item] =
     sql"""
       SELECT i.uuid, i.name, i.description, i.price,

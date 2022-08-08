@@ -13,6 +13,7 @@ import shop.optics.uuid
 import io.circe._
 import io.circe.refined._
 
+import javax.crypto.Cipher
 import scala.util.control.NoStackTrace
 
 object auth {
@@ -31,6 +32,13 @@ object auth {
   case class PasswordParam(value: NonEmptyString) {
     def toDomain: Password = Password(value)
   }
+
+  @newtype
+  case class EncryptCipher(value: Cipher)
+
+  @newtype
+  case class DecryptCipher(value: Cipher)
+
 
   @derive(decoder, encoder)
   case class CreateUser(
