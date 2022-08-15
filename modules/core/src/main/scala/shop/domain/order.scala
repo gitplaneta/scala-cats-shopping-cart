@@ -13,7 +13,7 @@ import shop.optics.uuid
 import scala.util.control.NoStackTrace
 
 object order {
-  @derive(uuid, encoder, decoder)
+  @derive(decoder, encoder, eqv, show, uuid)
   @newtype case class OrderId(uuid: UUID)
 
   @derive(decoder, encoder, eqv, show, uuid)
