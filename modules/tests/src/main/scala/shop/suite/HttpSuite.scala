@@ -1,15 +1,15 @@
 package shop.suite
 
 import scala.util.control.NoStackTrace
-
 import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import cats.syntax.all._
 import io.circe._
 import io.circe.syntax._
 import org.http4s._
 import org.http4s.circe._
 import weaver.scalacheck.Checkers
-import weaver.{ Expectations, SimpleIOSuite }
+import weaver.{Expectations, SimpleIOSuite}
 
 trait HttpSuite extends SimpleIOSuite with Checkers {
 
@@ -18,15 +18,17 @@ trait HttpSuite extends SimpleIOSuite with Checkers {
   def expectHttpBodyAndStatus[A: Encoder](routes: HttpRoutes[IO], req: Request[IO])(
       expectedBody: A,
       expectedStatus: Status
-  ): IO[Expectations] =
+  ): IO[Expectations] = {
     routes.run(req).value.flatMap {
       case Some(resp) =>
-        resp.asJson.map { json =>
+        resp.asJson.map {
+          json =>
           expect.same(resp.status, expectedStatus) |+| expect
             .same(json.dropNullValues, expectedBody.asJson.dropNullValues)
         }
       case None => IO.pure(failure("route not found"))
     }
+  }
 
   def expectHttpStatus(routes: HttpRoutes[IO], req: Request[IO])(expectedStatus: Status): IO[Expectations] =
     routes.run(req).value.map {

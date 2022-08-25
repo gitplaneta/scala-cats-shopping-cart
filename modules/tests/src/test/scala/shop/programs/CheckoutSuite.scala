@@ -1,29 +1,27 @@
 package shop.programs
 
 import cats.data.NonEmptyList
-import weaver.SimpleIOSuite
-import weaver.scalacheck.Checkers
 import cats.effect._
 import cats.syntax.all._
 import org.typelevel.log4cats.noop.NoOpLogger
-import retry.RetryDetails.{ GivingUp, WillDelayAndRetry }
+import retry.RetryDetails.{GivingUp, WillDelayAndRetry}
 import retry.RetryPolicies._
 import retry.RetryPolicy
 import shop.domain.auth.UserId
-import shop.domain.cart.{ Cart, CartItem, CartTotal, Quantity }
+import shop.domain.cart.{Cart, CartItem, CartTotal, Quantity}
 import shop.domain.item.ItemId
-import shop.domain.order.{ EmptyCartError, Order, OrderId, PaymentError, PaymentId }
-import shop.domain.payment
+import shop.domain.order._
 import shop.domain.payment.Payment
 import shop.effects.TestBackground
 import shop.generators._
 import shop.http.clients.PaymentClient
 import shop.retries.TestRetry
-import shop.services.{ Orders, ShoppingCart }
-import squants.market.{ Money, USD }
-import scala.concurrent.duration.FiniteDuration
-import scala.concurrent.duration._
-import shop.domain.order._
+import shop.services.{Orders, ShoppingCart}
+import squants.market.{Money, USD}
+import weaver.SimpleIOSuite
+import weaver.scalacheck.Checkers
+
+import scala.concurrent.duration.{FiniteDuration, _}
 
 object CheckoutSuite extends SimpleIOSuite with Checkers {
 

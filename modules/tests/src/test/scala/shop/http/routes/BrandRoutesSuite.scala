@@ -2,16 +2,16 @@ package shop.http.routes
 
 
 
-import shop.domain.ID
-import shop.domain.brand._
-import shop.generators._
-import shop.services.Brands
 import cats.effect._
 import org.http4s.Method._
 import org.http4s._
 import org.http4s.client.dsl.io._
 import org.http4s.syntax.literals._
 import org.scalacheck.Gen
+import shop.domain.ID
+import shop.domain.brand._
+import shop.generators._
+import shop.services.Brands
 import shop.suite.HttpSuite
 
 

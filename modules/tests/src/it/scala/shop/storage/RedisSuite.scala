@@ -93,10 +93,10 @@ object RedisSuite extends ResourceSuite {
           a = Auth.make(tokenExp, t, new TestUsers(un2), redis, c)
           u = UsersAuth.common[IO](redis)
           x <- u.findUser(JwtToken("invalid"))(jwtClaim)
-          y <- a.login(un1, pw).attempt // UserNotFound
+          y <- a.login(un1, pw).attempt
           j <- a.newUser(un1, pw)
           e <- jwtDecode[IO](j, userJwtAuth.value).attempt
-          k <- a.login(un2, pw).attempt // InvalidPassword
+          k <- a.login(un2, pw).attempt
           w <- u.findUser(j)(jwtClaim)
           s <- redis.get(j.value)
           _ <- a.logout(j, un1)

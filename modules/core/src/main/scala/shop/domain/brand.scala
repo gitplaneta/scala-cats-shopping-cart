@@ -19,11 +19,19 @@ import io.circe.{ Decoder, Encoder }
 import io.estatico.newtype.macros.newtype
 
 object brand {
+  @derive(decoder, encoder, eqv, show)
+  @newtype
+  case class BrandName(value: String) {
+    def toBrand(brandId: BrandId): Brand =
+      Brand(brandId, this)
+  }
+
   @derive(queryParam, show)
   @newtype
   case class BrandParam(value: NonEmptyString) {
-    def toDomain: BrandName = BrandName(value.toLowerCase.capitalize)
+    def toDomain: BrandName = BrandName(value)
   }
+
 
   object BrandParam {
     implicit val jsonEncoder: Encoder[BrandParam] =
@@ -36,10 +44,6 @@ object brand {
   @derive(decoder, encoder, eqv, show, uuid)
   @newtype
   case class BrandId(value: UUID)
-
-  @derive(decoder, encoder, eqv, show)
-  @newtype
-  case class BrandName(value: String)
 
   @derive(decoder, encoder, show, eqv)
   case class Brand(uuid: BrandId, name: BrandName)
