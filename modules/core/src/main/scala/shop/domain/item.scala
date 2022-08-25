@@ -5,11 +5,11 @@ import derevo.circe.magnolia._
 import derevo.derive
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.auto._
-import eu.timepit.refined.string.{Uuid, ValidBigDecimal}
+import eu.timepit.refined.string.{ Uuid, ValidBigDecimal }
 import eu.timepit.refined.types.string.NonEmptyString
 import io.estatico.newtype.macros.newtype
 import shop.domain.brand._
-import shop.domain.cart.{CartItem, Quantity}
+import shop.domain.cart.{ CartItem, Quantity }
 import shop.domain.category._
 import shop.optics.uuid
 import squants.market._
@@ -87,9 +87,9 @@ object item {
 
   @derive(decoder, encoder)
   case class UpdateItemParam(
-                              id: ItemIdParam,
-                              price: PriceParam
-                            ) {
+      id: ItemIdParam,
+      price: PriceParam
+  ) {
     def toDomain: UpdateItem =
       UpdateItem(
         ItemId(UUID.fromString(id.value)),

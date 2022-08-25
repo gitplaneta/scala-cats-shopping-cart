@@ -42,38 +42,38 @@ object types {
   @newtype case class ShoppingCartExpiration(value: FiniteDuration)
 
   case class CheckoutConfig(
-                             retriesLimit: PosInt,
-                             retriesBackoff: FiniteDuration
-                           )
+      retriesLimit: PosInt,
+      retriesBackoff: FiniteDuration
+  )
 
   case class AppConfig(
-                        adminJwtConfig: AdminJwtConfig,
-                        tokenConfig: Secret[JwtAccessTokenKeyConfig],
-                        passwordSalt: Secret[PasswordSalt],
-                        tokenExpiration: TokenExpiration,
-                        cartExpiration: ShoppingCartExpiration,
-                        checkoutConfig: CheckoutConfig,
-                        paymentConfig: PaymentConfig,
-                        httpClientConfig: HttpClientConfig,
-                        postgreSQL: PostgreSQLConfig,
-                        redis: RedisConfig,
-                        httpServerConfig: HttpServerConfig
-                      )
+      adminJwtConfig: AdminJwtConfig,
+      tokenConfig: Secret[JwtAccessTokenKeyConfig],
+      passwordSalt: Secret[PasswordSalt],
+      tokenExpiration: TokenExpiration,
+      cartExpiration: ShoppingCartExpiration,
+      checkoutConfig: CheckoutConfig,
+      paymentConfig: PaymentConfig,
+      httpClientConfig: HttpClientConfig,
+      postgreSQL: PostgreSQLConfig,
+      redis: RedisConfig,
+      httpServerConfig: HttpServerConfig
+  )
 
   case class AdminJwtConfig(
-                             secretKey: Secret[JwtSecretKeyConfig],
-                             claimStr: Secret[JwtClaimConfig],
-                             adminToken: Secret[AdminUserTokenConfig]
-                           )
+      secretKey: Secret[JwtSecretKeyConfig],
+      claimStr: Secret[JwtClaimConfig],
+      adminToken: Secret[AdminUserTokenConfig]
+  )
 
   case class PostgreSQLConfig(
-                               host: NonEmptyString,
-                               port: UserPortNumber,
-                               user: NonEmptyString,
-                               password: Secret[NonEmptyString],
-                               database: NonEmptyString,
-                               max: PosInt
-                             )
+      host: NonEmptyString,
+      port: UserPortNumber,
+      user: NonEmptyString,
+      password: Secret[NonEmptyString],
+      database: NonEmptyString,
+      max: PosInt
+  )
 
   @newtype case class RedisURI(value: NonEmptyString)
 
@@ -84,13 +84,13 @@ object types {
   @newtype case class PaymentConfig(uri: PaymentURI)
 
   case class HttpServerConfig(
-                               host: Host,
-                               port: Port
-                             )
+      host: Host,
+      port: Port
+  )
 
   case class HttpClientConfig(
-                               timeout: FiniteDuration,
-                               idleTimeInPool: FiniteDuration
-                             )
+      timeout: FiniteDuration,
+      idleTimeInPool: FiniteDuration
+  )
 
 }

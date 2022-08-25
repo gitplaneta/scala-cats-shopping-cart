@@ -4,8 +4,8 @@ import cats.MonadThrow
 import io.circe.JsonObject
 import org.http4s.circe.JsonDecoder
 import org.http4s.dsl.Http4sDsl
-import org.http4s.server.{AuthMiddleware, Router}
-import org.http4s.{AuthedRoutes, HttpRoutes}
+import org.http4s.server.{ AuthMiddleware, Router }
+import org.http4s.{ AuthedRoutes, HttpRoutes }
 import shop.domain.brand.BrandParam
 import shop.ext.http4s.refined.RefinedRequestDecoder
 import shop.http.auth.users.AdminUser

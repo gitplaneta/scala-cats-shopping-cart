@@ -1,17 +1,16 @@
 package shop.http.routes
 
 import cats.Monad
-import org.http4s.{AuthedRoutes, HttpRoutes}
+import org.http4s.{ AuthedRoutes, HttpRoutes }
 import org.http4s.circe._
 import cats.syntax.all._
 import org.http4s.dsl.Http4sDsl
 import shop.http.auth.users.CommonUser
 import shop.services.ShoppingCart
 import org.http4s.circe.CirceEntityCodec._
-import org.http4s.server.{AuthMiddleware, Router}
+import org.http4s.server.{ AuthMiddleware, Router }
 import shop.domain.cart.Cart
 import shop.http.vars.ItemIdVar
-
 
 final case class CartRoutes[F[_]: JsonDecoder: Monad](
     shoppingCart: ShoppingCart[F]
@@ -26,12 +25,13 @@ final case class CartRoutes[F[_]: JsonDecoder: Monad](
         cart.items
           .map {
             case (id, q) => shoppingCart.add(user.value.id, id, q)
-          }.toList
+          }
+          .toList
           .sequence *> Created()
       }
 
     case ar @ PUT -> Root as user =>
-      ar.req.asJsonDecode[Cart].flatMap{ c =>
+      ar.req.asJsonDecode[Cart].flatMap { c =>
         shoppingCart.update(user.value.id, c) *> Ok()
       }
 

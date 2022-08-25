@@ -1,6 +1,5 @@
 package shop.auth
 
-
 import shop.config.types.TokenExpiration
 import shop.effects.JwtClock
 

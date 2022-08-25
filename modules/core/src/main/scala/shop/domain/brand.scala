@@ -32,7 +32,6 @@ object brand {
     def toDomain: BrandName = BrandName(value)
   }
 
-
   object BrandParam {
     implicit val jsonEncoder: Encoder[BrandParam] =
       Encoder.forProduct1("name")(_.value)

@@ -46,16 +46,17 @@ object Items {
     }
 
     override def update(item: UpdateItem): F[Unit] = postgres.use { s =>
-      s.prepare(updatedItem).use {ps =>
+      s.prepare(updatedItem).use { ps =>
         ps.execute(item).void
       }
     }
 
     private def exerciseFindBy(brandName: BrandName): F[(List[Item], Boolean)] = postgres.use { s =>
       s.prepare(selectByBrand).use { ps =>
-        ps.cursor(brandName).use(c => {
-          c.fetch(1024)
-        })
+        ps.cursor(brandName)
+          .use(c => {
+            c.fetch(1024)
+          })
       }
     }
   }

@@ -10,7 +10,7 @@ import org.http4s.server.Router
 case class HealthRoutes[F[_]: Monad](
     healthCheck: HealthCheck[F]
 ) extends Http4sDsl[F] {
-  private [routes] val prefixPath = "/healthcheck"
+  private[routes] val prefixPath = "/healthcheck"
 
   private val httpRoutes: HttpRoutes[F] =
     HttpRoutes.of[F] {

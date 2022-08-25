@@ -1,6 +1,6 @@
 package shop.domain
 
-import derevo.circe.magnolia.{decoder, encoder}
+import derevo.circe.magnolia.{ decoder, encoder }
 import derevo.derive
 import eu.timepit.refined.api._
 import eu.timepit.refined.boolean.And

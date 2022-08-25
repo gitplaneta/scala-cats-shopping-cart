@@ -2,9 +2,9 @@ package shop.services
 
 import cats.effect.MonadCancelThrow
 import cats.effect.kernel.Resource
-import shop.domain.auth.{UserId, UserNameInUse}
+import shop.domain.auth.{ UserId, UserNameInUse }
 import shop.effects.GenUUID
-import shop.http.auth.users.{EncryptedPassword, User, UserName, UserWithPassword}
+import shop.http.auth.users.{ EncryptedPassword, User, UserName, UserWithPassword }
 import shop.sql.codecs._
 import skunk.Codec
 import skunk._
@@ -35,13 +35,17 @@ object Users {
           }
       )
 
-    override def create(username: UserName, password: EncryptedPassword): F[UserId] = postgres.use(s => s.prepare(insertUser).use {pc =>
-      ID.make[F, UserId]
-        .flatMap( uId => pc.execute(User(uId, username) ~ password).as(uId))
-        .recoverWith {
-          case SqlState.UniqueViolation(_) => UserNameInUse(username).raiseError[F, UserId]
-        }
-    })
+    override def create(username: UserName, password: EncryptedPassword): F[UserId] =
+      postgres.use(
+        s =>
+          s.prepare(insertUser).use { pc =>
+            ID.make[F, UserId]
+              .flatMap(uId => pc.execute(User(uId, username) ~ password).as(uId))
+              .recoverWith {
+                case SqlState.UniqueViolation(_) => UserNameInUse(username).raiseError[F, UserId]
+              }
+          }
+      )
   }
 }
 

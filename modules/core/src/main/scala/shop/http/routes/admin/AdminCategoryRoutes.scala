@@ -16,8 +16,8 @@ import org.http4s.dsl.Http4sDsl
 import org.http4s.server._
 
 final case class AdminCategoryRoutes[F[_]: JsonDecoder: MonadThrow](
-                                                                     categories: Categories[F]
-                                                                   ) extends Http4sDsl[F] {
+    categories: Categories[F]
+) extends Http4sDsl[F] {
 
   private[admin] val prefixPath = "/categories"
 

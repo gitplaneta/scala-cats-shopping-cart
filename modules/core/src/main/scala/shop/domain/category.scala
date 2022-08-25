@@ -1,7 +1,7 @@
 package shop.domain
 import java.util.UUID
 import derevo.cats._
-import derevo.circe.magnolia.{decoder, encoder}
+import derevo.circe.magnolia.{ decoder, encoder }
 import derevo.derive
 import eu.timepit.refined.auto._
 import eu.timepit.refined.types.string.NonEmptyString

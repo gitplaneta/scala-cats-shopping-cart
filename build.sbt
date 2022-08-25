@@ -2,8 +2,8 @@ import Dependencies._
 
 inThisBuild(
   Seq(
-    scalaVersion := "2.13.6",
-    version := "0.1.0",
+    scalaVersion := "2.13.8",
+    version := "1.0.0",
     organization := "eu.busz",
     organizationName := "radzina",
     evictionErrorLevel := Level.Warn,
@@ -12,26 +12,19 @@ inThisBuild(
 )
 
 resolvers += Resolver.sonatypeRepo("snapshots")
-val scalafixCommonSettings =
-  inConfig(IntegrationTest)(scalafixConfigSettings(IntegrationTest))
 
-lazy val root = project
-  .in(file("."))
+val scalafixCommonSettings = inConfig(IntegrationTest)(scalafixConfigSettings(IntegrationTest))
+lazy val root = (project in file("."))
   .settings(
     name := "my-shopping-cart"
   )
   .aggregate(core, tests)
 
-lazy val tests = project
-  .in(file("modules/tests"))
+lazy val tests = (project in file("modules/tests"))
   .configs(IntegrationTest)
   .settings(
-    name := "shopping-cart-test-suite",
-    scalacOptions ++= List(
-      "-Ymacro-annotations",
-      "-Yrangepos",
-      "-Wconf:cat=unused:info"
-    ),
+    name := "my-shopping-cart-test-suite",
+    scalacOptions ++= List("-Ymacro-annotations", "-Yrangepos", "-Wconf:cat=unused:info"),
     testFrameworks += new TestFramework("weaver.framework.CatsEffect"),
     Defaults.itSettings,
     scalafixCommonSettings,
@@ -50,11 +43,21 @@ lazy val tests = project
   )
   .dependsOn(core)
 
-lazy val core = project.in(file("modules/core"))
-.settings(
-  name := "shopping-cart-core",
-scalacOptions ++= List("-Ymacro-annotations", "-Yrangepos", "-Wconf:cat=unused:info"),
-  libraryDependencies ++= Seq(
+lazy val core = (project in file("modules/core"))
+  .enablePlugins(DockerPlugin)
+  .enablePlugins(AshScriptPlugin)
+  .settings(
+    name := "my-shopping-cart-core",
+    Docker / packageName := "my-shopping-cart",
+    scalacOptions ++= List("-Ymacro-annotations", "-Yrangepos", "-Wconf:cat=unused:info"),
+    scalafmtOnCompile := true,
+    resolvers += Resolver.sonatypeRepo("snapshots"),
+    Defaults.itSettings,
+    scalafixCommonSettings,
+    dockerBaseImage := "openjdk:11-jre-slim-buster",
+    dockerExposedPorts ++= Seq(8080),
+    dockerUpdateLatest := true,
+    libraryDependencies ++= Seq(
       CompilerPlugin.kindProjector,
       CompilerPlugin.betterMonadicFor,
       CompilerPlugin.semanticDB,
@@ -90,6 +93,6 @@ scalacOptions ++= List("-Ymacro-annotations", "-Yrangepos", "-Wconf:cat=unused:i
       Libraries.skunkCirce,
       Libraries.squants
     )
-)
+  )
 
 addCommandAlias("runLinter", ";scalafixAll --rules OrganizeImports")

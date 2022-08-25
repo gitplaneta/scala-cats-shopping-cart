@@ -1,5 +1,6 @@
 package shop.modules
 
+import cats.effect.Async
 import cats.syntax.all._
 import cats.effect.kernel.Async
 import dev.profunktor.auth.JwtAuthMiddleware
@@ -13,6 +14,15 @@ import shop.http.routes.auth._
 import org.http4s.implicits._
 
 import scala.concurrent.duration.DurationInt
+
+object HttpApi {
+  def make[F[_]: Async](
+      services: Services[F],
+      programs: Programs[F],
+      security: Security[F]
+  ): HttpApi[F] =
+    new HttpApi[F](services, programs, security) {}
+}
 
 sealed abstract class HttpApi[F[_]: Async] private (
     security: Security[F],

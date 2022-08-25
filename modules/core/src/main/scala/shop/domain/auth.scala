@@ -1,14 +1,14 @@
 package shop.domain
 
-import derevo.cats.{eqv, show}
-import derevo.circe.magnolia.{decoder, encoder}
+import derevo.cats.{ eqv, show }
+import derevo.circe.magnolia.{ decoder, encoder }
 import derevo.derive
 import eu.timepit.refined.auto.autoUnwrap
 import eu.timepit.refined.types.string.NonEmptyString
 import io.estatico.newtype.macros.newtype
 
 import java.util.UUID
-import shop.http.auth.users.{Password, UserName}
+import shop.http.auth.users.{ Password, UserName }
 import shop.optics.uuid
 import io.circe._
 import io.circe.refined._
@@ -38,13 +38,11 @@ object auth {
 
   @newtype
   case class DecryptCipher(value: Cipher)
-
-
   @derive(decoder, encoder)
   case class CreateUser(
-                         username: UserNameParam,
-                         password: PasswordParam
-                       )
+      username: UserNameParam,
+      password: PasswordParam
+  )
 
   case class UserNotFound(username: UserName) extends NoStackTrace
 
@@ -57,7 +55,16 @@ object auth {
   case object TokenNotFound extends NoStackTrace
   @derive(decoder, encoder)
   case class LoginUser(
-                        username: UserNameParam,
-                        password: PasswordParam
-                      )
+      username: UserNameParam,
+      password: PasswordParam
+  )
+
+  @newtype
+  case class ClaimContent(uuid: UUID)
+
+  object ClaimContent {
+    implicit val jsonDecoder: Decoder[ClaimContent] =
+      Decoder.forProduct1("uuid")(ClaimContent.apply)
+  }
+
 }

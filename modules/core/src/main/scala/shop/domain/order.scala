@@ -5,8 +5,8 @@ import squants.market.Money
 
 import java.util.UUID
 import cart._
-import derevo.cats.{eqv, show}
-import derevo.circe.magnolia.{decoder, encoder}
+import derevo.cats.{ eqv, show }
+import derevo.circe.magnolia.{ decoder, encoder }
 import derevo.derive
 import shop.optics.uuid
 
@@ -30,8 +30,6 @@ object order {
 
   @derive(show)
   case object EmptyCartError extends NoStackTrace
-
-
   @derive(show)
   sealed trait OrderOrPaymentError extends NoStackTrace {
     def cause: String

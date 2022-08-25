@@ -1,7 +1,7 @@
 package shop.http.auth
 
-import derevo.cats.{eqv, show}
-import derevo.circe.magnolia.{decoder, encoder}
+import derevo.cats.{ eqv, show }
+import derevo.circe.magnolia.{ decoder, encoder }
 import derevo.derive
 import dev.profunktor.auth.jwt.JwtSymmetricAuth
 import io.estatico.newtype.macros.newtype

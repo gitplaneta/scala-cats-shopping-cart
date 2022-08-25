@@ -27,7 +27,7 @@ object PaymentClient {
         client.run(POST(payment, uri)).use { resp =>
           resp.status match {
             case Status.Ok | Status.Conflict => resp.asJsonDecode
-            case st => PaymentError(Option(st.reason).getOrElse("Unknown")).raiseError[F, PaymentId]
+            case st                          => PaymentError(Option(st.reason).getOrElse("Unknown")).raiseError[F, PaymentId]
           }
         }
       }

@@ -1,6 +1,5 @@
 package shop.http.routes
 
-
 import shop.http.auth.users.CommonUser
 import shop.http.vars.OrderIdVar
 import shop.services.Orders
@@ -13,10 +12,10 @@ import org.http4s.server._
 
 case class OrderRoutes[F[_]: Monad](
     orders: Orders[F]
-                                   ) extends Http4sDsl[F] {
+) extends Http4sDsl[F] {
   private[routes] val prefixPath = "/orders"
 
-  private val httpRoutes: AuthedRoutes[CommonUser, F] = AuthedRoutes.of{
+  private val httpRoutes: AuthedRoutes[CommonUser, F] = AuthedRoutes.of {
     case GET -> Root as user => Ok(orders.findBy(user.value.id))
 
     case GET -> Root / OrderIdVar(orderId) as user =>

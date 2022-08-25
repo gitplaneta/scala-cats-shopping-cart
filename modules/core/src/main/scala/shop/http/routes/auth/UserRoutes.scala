@@ -5,7 +5,7 @@ import org.http4s.HttpRoutes
 import org.http4s.circe.JsonDecoder
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
-import shop.domain.auth.{CreateUser, UserNameInUse}
+import shop.domain.auth.{ CreateUser, UserNameInUse }
 import shop.services.Auth
 import cats.syntax.all._
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder

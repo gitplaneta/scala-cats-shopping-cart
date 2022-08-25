@@ -54,11 +54,12 @@ object ShoppingCart {
 
     override def update(userId: UserId, cart: Cart): F[Unit] = redis.hGetAll(userId.show).flatMap {
       _.toList.traverse_ {
-        case (k, _) => ID.read[F, ItemId](k).flatMap { id =>
-          cart.items.get(id).traverse_ { q =>
-            redis.hSet(userId.show, k, q.show)
+        case (k, _) =>
+          ID.read[F, ItemId](k).flatMap { id =>
+            cart.items.get(id).traverse_ { q =>
+              redis.hSet(userId.show, k, q.show)
+            }
           }
-        }
       } *> redis.expire(userId.show, exp.value).void
     }
   }

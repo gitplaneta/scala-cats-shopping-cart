@@ -7,9 +7,9 @@ import io.circe.syntax.EncoderOps
 import org.http4s.circe.CirceEntityCodec._
 import org.http4s.circe.JsonDecoder
 import org.http4s.dsl.Http4sDsl
-import org.http4s.server.{AuthMiddleware, Router}
-import org.http4s.{AuthedRoutes, HttpRoutes}
-import shop.domain.item.{CreateItemParam, UpdateItemParam}
+import org.http4s.server.{ AuthMiddleware, Router }
+import org.http4s.{ AuthedRoutes, HttpRoutes }
+import shop.domain.item.{ CreateItemParam, UpdateItemParam }
 import shop.ext.http4s.refined._
 import shop.http.auth.users.AdminUser
 import shop.services.Items

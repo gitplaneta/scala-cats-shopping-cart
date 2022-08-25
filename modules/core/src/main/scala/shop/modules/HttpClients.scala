@@ -10,7 +10,7 @@ object HttpClients {
   def make[F[_]: JsonDecoder: MonadCancelThrow](
       cfg: PaymentConfig,
       client: Client[F]
-                                               ): HttpClients[F] = new HttpClients[F] {
+  ): HttpClients[F] = new HttpClients[F] {
     override def payment: PaymentClient[F] = PaymentClient.make(cfg, client)
   }
 }
