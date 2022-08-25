@@ -16,7 +16,7 @@ final case class BrandRoutes[F[_]: Monad](
   private[routes] val prefixPath = "/brands"
 
   val httpRoutes: HttpRoutes[F] = HttpRoutes.of[F] {
-    case GET -> Root / "brands" => Ok(brands.findAll)
+    case GET -> Root => Ok(brands.findAll)
   }
 
   val routes: HttpRoutes[F] = Router(prefixPath -> httpRoutes)

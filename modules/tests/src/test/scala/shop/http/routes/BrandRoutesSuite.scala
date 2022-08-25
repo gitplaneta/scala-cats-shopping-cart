@@ -1,7 +1,5 @@
 package shop.http.routes
 
-
-
 import cats.effect._
 import org.http4s.Method._
 import org.http4s._
