@@ -54,7 +54,7 @@ object UserSQL {
 
   val selectUser: Query[UserName, User ~ EncryptedPassword] =
     sql"""
-      SELECT * FROM user
+      SELECT * FROM users
       where name = $userNameCodec
        """.query(codec)
 

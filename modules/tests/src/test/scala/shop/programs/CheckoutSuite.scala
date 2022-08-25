@@ -61,12 +61,9 @@ object CheckoutSuite extends SimpleIOSuite with Checkers {
   }
 
   def recoveringClient(attemptsSoFar: Ref[IO, Int], paymentId: PaymentId): PaymentClient[IO] =
-    new PaymentClient[IO] {
-      def process(payment: Payment): IO[PaymentId] =
-        attemptsSoFar.get.flatMap {
-          case n if n === 1 => IO.pure(paymentId)
-          case _            => attemptsSoFar.update(_ + 1) *> IO.raiseError(PaymentError(""))
-        }
+    (payment: Payment) => attemptsSoFar.get.flatMap {
+      case n if n === 1 => IO.pure(paymentId)
+      case _ => attemptsSoFar.update(_ + 1) *> IO.raiseError(PaymentError(""))
     }
 
   val unreachableClient: PaymentClient[IO] =

@@ -38,7 +38,7 @@ object CategoriesSQL {
        """.query(categoryCodec)
   val insertCategory: Command[Category] =
     sql"""
-      INSERT INTO category
+      INSERT INTO categories
       VALUES ($categoryCodec)
        """.command
 }
