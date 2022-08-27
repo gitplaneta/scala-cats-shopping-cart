@@ -1,12 +1,20 @@
-shopping-cart
+my-shopping-cart
 =============
+A follow along implementation of a shopping cart based on "Practical FP in Scala" book.
+
+## Stack
+* Scala
+* Typelevel Cats, Cats Effect 3
+* Http4s
+* Skunk
+* Redis, Postgres
 
 ## Tests
 ```
 sbt test
 ```
 
-Itegration tests:
+Integration tests:
 
 ```
 docker-compose up

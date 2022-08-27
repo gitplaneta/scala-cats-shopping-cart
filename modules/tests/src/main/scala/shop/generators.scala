@@ -27,7 +27,7 @@ object generators {
 
   val nonEmptyStringGen: Gen[String] =
     Gen
-      .chooseNum(1, 100)
+      .chooseNum(24, 100)
       .flatMap(Gen.buildableOfN[String, Char](_, Gen.alphaChar))
 
   def nesGen[A](f: String => A): Gen[A] =
