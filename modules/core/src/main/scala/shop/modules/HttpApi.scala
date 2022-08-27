@@ -2,7 +2,7 @@ package shop.modules
 
 import cats.effect.Async
 import cats.syntax.all._
-import cats.effect.kernel.Async
+//import cats.effect.kernel.Async
 import dev.profunktor.auth.JwtAuthMiddleware
 import org.http4s.server.middleware.{ AutoSlash, CORS, RequestLogger, ResponseLogger, Timeout }
 import org.http4s.{ HttpApp, HttpRoutes }
@@ -12,6 +12,7 @@ import shop.http.routes._
 import shop.http.routes.admin.{ AdminBrandsRoutes, AdminCategoryRoutes, AdminItemRoutes }
 import shop.http.routes.auth._
 import org.http4s.implicits._
+import shop.programs.Programs
 
 import scala.concurrent.duration.DurationInt
 
@@ -25,9 +26,9 @@ object HttpApi {
 }
 
 sealed abstract class HttpApi[F[_]: Async] private (
-    security: Security[F],
     services: Services[F],
-    programs: Programs[F]
+    programs: Programs[F],
+    security: Security[F]
 ) {
 
   private val adminMiddleware =
